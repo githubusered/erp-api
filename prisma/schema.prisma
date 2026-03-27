@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Company {
+  id               Int               @id @default(autoincrement())
+  name             String
+  users            User[]
+  purchaseRequests  PurchaseRequest[]  @relation("CompanyPR")
+}
+
+model User {
+  id        Int    @id @default(autoincrement())
+  email     String @unique
+  password  String
+  role      String
+  companyId Int
+  company   Company @relation(fields: [companyId], references: [id])
+}
+
+model PurchaseRequest {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  status      String
+  companyId   Int
+  createdBy   Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  company     Company  @relation("CompanyPR", fields: [companyId], references: [id])
+}
+
+model AuditLog {
+  id          Int      @id @default(autoincrement())
+  entityType  String
+  entityId    Int
+  action      String
+  actorUserId Int
+  createdAt   DateTime @default(now())
+  metadata    String?
+}
