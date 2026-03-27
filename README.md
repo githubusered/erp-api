@@ -20,9 +20,10 @@ Create a .env file in the project root.
 
 Example:
 
-DATABASE_URL="postgresql://user:password@localhost:5432/erp_db"
+DATABASE_URL="file:./prisma/dev.db"
 JWT_SECRET="supersecretkey"
 PORT=4000
+
 4. Run database migrations
 npx prisma migrate dev
 
@@ -47,6 +48,7 @@ node server.js
 The API will run on:
 
 http://localhost:4000
+
 Test Credentials
 
 The seed script creates the following users:
@@ -87,6 +89,7 @@ Pagination for large request lists
 Rate limiting for login attempts
 Audit logs for workflow actions
 Example API Requests
+
 Login
 POST /api/auth/login
 
